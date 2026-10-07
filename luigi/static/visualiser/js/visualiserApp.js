@@ -343,7 +343,7 @@ function visualiserApp(luigi) {
                         if (data.statusMessage === null)
                             $("#statusMessageModal pre").hide();
                         else {
-                            $("#statusMessageModal pre").html(data.statusMessage).show();
+                            $("#statusMessageModal pre").text(data.statusMessage).show();
                         }
                     });
                     luigi.getTaskProgressPercentage(data.taskId, function(data) {
@@ -396,7 +396,7 @@ function visualiserApp(luigi) {
                                 if (response != null) {
                                     clearInterval(interval);
                                     $responseSpinner.hide();
-                                    $responseContent.html(response);
+                                    $responseContent.text(response);
                                 }
                             });
                         }, 1000);
@@ -778,7 +778,7 @@ function visualiserApp(luigi) {
                 }
             }
             var styleTooltip = function(name, description) {
-                return "<p class='name'>" + name + "</p><p class='description'>" + description + "</p>";
+                return "<p class='name'>" + escapeHtml(name) + "</p><p class='description'>" + escapeHtml(String(description)) + "</p>";
             };
             inner.call(render, g);
             if(paint){
@@ -1018,8 +1018,8 @@ function visualiserApp(luigi) {
     function renderParams(params) {
         var htmls = [];
         for (var key in params) {
-            htmls.push('<span class="param-name">' + key +
-                '</span>=<span class="param-value">' + params[key] + '</span>');
+            htmls.push('<span class="param-name">' + escapeHtml(key) +
+                '</span>=<span class="param-value">' + escapeHtml(params[key]) + '</span>');
         }
         return htmls.join(', ');
     }
